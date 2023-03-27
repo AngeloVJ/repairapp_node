@@ -19,6 +19,19 @@ exports.validRepairs = (req, res, next) => {
   next();
 };
 
+exports.validRepairsUpdate = (req, res, next) => {
+  const { status } = req.body;
+
+  if (!status) {
+    return res.status(400).json({
+      status: 'error',
+      message: 'The status is require',
+    });
+  }
+
+  next();
+};
+
 exports.validExistRepair = async (req, res, next) => {
   const { id } = req.params;
 

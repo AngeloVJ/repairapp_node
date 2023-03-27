@@ -31,6 +31,25 @@ exports.validUsers = (req, res, next) => {
   next();
 };
 
+exports.validUsersUpdate = (req, res, next) => {
+  const { name, email } = req.body;
+
+  if (!name) {
+    return res.status(400).json({
+      status: 'error',
+      message: 'the name is require',
+    });
+  }
+  if (!email) {
+    return res.status(400).json({
+      status: 'error',
+      message: 'the email is require',
+    });
+  }
+
+  next();
+};
+
 exports.validExistUser = async (req, res, next) => {
   const { id } = req.params;
 

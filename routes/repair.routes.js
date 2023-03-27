@@ -16,6 +16,7 @@ router
   .route('/:id')
   .get(repairsMiddleware.validExistRepair)
   .patch(
+    repairsMiddleware.validRepairsUpdate,
     repairsMiddleware.validExistRepair,
     repairsController.updateRepair
   )

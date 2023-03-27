@@ -12,7 +12,11 @@ router
 router
   .route('/:id')
   .get(usersMiddleware.validExistUser, usersController.findOneUser)
-  .patch(usersMiddleware.validExistUser, usersController.updateUser)
+  .patch(
+    usersMiddleware.validUsersUpdate,
+    usersMiddleware.validExistUser,
+    usersController.updateUser
+  )
   .delete(usersMiddleware.validExistUser, usersController.deleteUser);
 
 module.exports = router;

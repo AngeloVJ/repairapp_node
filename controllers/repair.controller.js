@@ -1,6 +1,7 @@
 const Repair = require('../models/repair.model');
+const catchAsync = require('../utils/catchAsync');
 
-exports.findAllRepairs = async (req, res) => {
+exports.findAllRepairs = catchAsync(async (req, res) => {
   const repairs = await Repair.findAll({
     where: {
       status: 'pending',
@@ -13,9 +14,9 @@ exports.findAllRepairs = async (req, res) => {
     results: repairs.length,
     repairs,
   });
-};
+});
 
-exports.createRepair = async (req, res) => {
+exports.createRepair = catchAsync(async (req, res) => {
   const { date, userid } = req.body;
 
   const repair = await Repair.create({
@@ -28,9 +29,9 @@ exports.createRepair = async (req, res) => {
     message: 'The repair task has been created!!',
     repair,
   });
-};
+});
 
-exports.updateRepair = async (req, res) => {
+exports.updateRepair = catchAsync(async (req, res) => {
   const { repair } = req;
   const { status } = req.body;
 
@@ -43,9 +44,9 @@ exports.updateRepair = async (req, res) => {
     status: 'success',
     message: 'The repair task has been updated',
   });
-};
+});
 
-exports.deleteRepair = async (req, res) => {
+exports.deleteRepair = catchAsync(async (req, res) => {
   const { repair } = req;
   await repair.update({ status: 'cancelled' });
 
@@ -53,13 +54,13 @@ exports.deleteRepair = async (req, res) => {
     status: 'success',
     message: 'The repair task has been deleted',
   });
-};
+});
 
-exports.findOneRepair = async (req, res) => {
+exports.findOneRepair = catchAsync(async (req, res) => {
   const { repair } = req;
   res.status(200).json({
     status: 'succes',
     message: 'The query has benn done successfully',
     repair,
   });
-};
+});

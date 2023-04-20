@@ -1,38 +1,7 @@
 const Repair = require('../models/repair.model');
+const catchAsync = require('./../utils/catchAsync');
 
-exports.validRepairs = (req, res, next) => {
-  const { date, userid } = req.body;
-
-  if (!date) {
-    return res.status(400).json({
-      status: 'error',
-      message: 'the date is require',
-    });
-  }
-  if (!userid) {
-    return res.status(400).json({
-      status: 'error',
-      message: 'the user ID is require',
-    });
-  }
-
-  next();
-};
-
-exports.validRepairsUpdate = (req, res, next) => {
-  const { status } = req.body;
-
-  if (!status) {
-    return res.status(400).json({
-      status: 'error',
-      message: 'The status is require',
-    });
-  }
-
-  next();
-};
-
-exports.validExistRepair = async (req, res, next) => {
+exports.validExistRepair = catchAsync(async (req, res, next) => {
   const { id } = req.params;
 
   const repair = await Repair.findOne({
@@ -51,4 +20,4 @@ exports.validExistRepair = async (req, res, next) => {
 
   req.repair = repair;
   next();
-};
+});

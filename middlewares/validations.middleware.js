@@ -54,7 +54,9 @@ exports.updateUserValidation = [
 
 exports.createRepairValidation = [
   body('date').notEmpty().withMessage('The date is require'),
-  body('userid').notEmpty().withMessage('The userid is require'),
+  body('motorsNumber').notEmpty().withMessage('The motorsNumber is require'),
+  body('description').notEmpty().withMessage('The description is require'),
+  body('userId').notEmpty().withMessage('The userid is require'),
 ];
 
 exports.updateRepairValidation = [

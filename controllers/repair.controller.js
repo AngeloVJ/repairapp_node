@@ -1,11 +1,24 @@
 const Repair = require('../models/repair.model');
 const catchAsync = require('../utils/catchAsync');
+const User = require('../models/user.model');
+const { db } = require('./../database/config');
 
-exports.findAllRepairs = catchAsync(async (req, res) => {
+exports.findAllRepairs = catchAsync(async (req, res, next) => {
   const repairs = await Repair.findAll({
     where: {
       status: 'pending',
     },
+    attributes: {
+      exclude: ['userId', 'createdAt', 'updatedAt'],
+    },
+    include: [
+      {
+        model: User,
+        attributes: {
+          exclude: ['password', 'createdAt', 'updatedAt'],
+        },
+      },
+    ],
   });
 
   res.status(200).json({
@@ -17,11 +30,13 @@ exports.findAllRepairs = catchAsync(async (req, res) => {
 });
 
 exports.createRepair = catchAsync(async (req, res) => {
-  const { date, userid } = req.body;
+  const { date, motorsNumber, description, userId } = req.body;
 
   const repair = await Repair.create({
     date,
-    userid,
+    motorsNumber,
+    description,
+    userId,
   });
 
   res.status(201).json({
